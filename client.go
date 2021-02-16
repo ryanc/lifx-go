@@ -10,6 +10,7 @@ import (
 	"net/http"
 	"net/url"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -69,6 +70,12 @@ var errorMap = map[int]error{
 	http.StatusBadGateway:          errors.New("Something went wrong on LIFX's end"),
 	http.StatusServiceUnavailable:  errors.New("Something went wrong on LIFX's end"),
 	523:                            errors.New("Something went wrong on LIFX's end"),
+}
+
+var userAgent string
+
+func init() {
+	userAgent = initUserAgent()
 }
 
 func NewClient(accessToken string, options ...func(*Client)) *Client {
@@ -332,4 +339,13 @@ func (c *Client) stateDelta(selector string, delta StateDelta) (*Response, error
 	}
 
 	return resp, nil
+}
+
+func initUserAgent() string {
+	var b strings.Builder
+
+	b.WriteString("lifx-go")
+	b.WriteRune('/')
+	b.WriteString(Version)
+	return b.String()
 }
