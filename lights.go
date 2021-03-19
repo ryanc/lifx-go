@@ -90,11 +90,11 @@ type (
 	Breathe struct {
 		Color     Color   `json:"color,omitempty"`
 		FromColor Color   `json:"from_color,omitempty"`
-		Period    float32 `json:"period,omitempty"`
-		Cycles    float32 `json:"cycles,omitempty"`
+		Period    float64 `json:"period,omitempty"`
+		Cycles    float64 `json:"cycles,omitempty"`
 		Persist   bool    `json:"persist,omitempty"`
 		PowerOn   bool    `json:"power_on,omitempty"`
-		Peak      float32 `json:"peak,omitempty"`
+		Peak      float64 `json:"peak,omitempty"`
 	}
 )
 
