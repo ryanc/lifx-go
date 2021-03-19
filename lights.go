@@ -86,6 +86,16 @@ type (
 	Toggle struct {
 		Duration float64 `json:"duration,omitempty"`
 	}
+
+	Breathe struct {
+		Color     Color   `json:"color,omitempty"`
+		FromColor Color   `json:"from_color,omitempty"`
+		Period    float32 `json:"period,omitempty"`
+		Cycles    float32 `json:"cycles,omitempty"`
+		Persist   bool    `json:"persist,omitempty"`
+		PowerOn   bool    `json:"power_on,omitempty"`
+		Peak      float32 `json:"peak,omitempty"`
+	}
 )
 
 func (c *Client) SetState(selector string, state State) (*LifxResponse, error) {
@@ -218,4 +228,27 @@ func (c *Client) PowerOn(selector string) (*LifxResponse, error) {
 
 func (c *Client) FastPowerOn(selector string) {
 	c.SetState(selector, State{Power: "on", Fast: true})
+}
+
+func (c *Client) Breathe(selector string, breathe Breathe) (*LifxResponse, error) {
+	var (
+		err  error
+		s    *LifxResponse
+		resp *Response
+	)
+
+	if resp, err = c.breathe(selector, breathe); err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+
+	if resp.IsError() {
+		return nil, resp.GetLifxError()
+	}
+
+	if err = json.NewDecoder(resp.Body).Decode(&s); err != nil {
+		return nil, err
+	}
+
+	return s, nil
 }

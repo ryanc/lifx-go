@@ -32,4 +32,7 @@ var (
 	EndpointToggle = func(selector string) string {
 		return BuildURL(Endpoint, fmt.Sprintf("/lights/%s/toggle", selector))
 	}
+	EndpointBreathe = func(selector string) string {
+		return BuildURL(Endpoint, fmt.Sprintf("/lights/%s/effect/breathe", selector))
+	}
 )

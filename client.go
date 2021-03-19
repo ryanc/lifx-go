@@ -201,6 +201,35 @@ func (c *Client) setState(selector string, state State) (*Response, error) {
 	return resp, nil
 }
 
+func (c *Client) breathe(selector string, breathe Breathe) (*Response, error) {
+	var (
+		err  error
+		j    []byte
+		req  *http.Request
+		r    *http.Response
+		resp *Response
+	)
+
+	if j, err = json.Marshal(breathe); err != nil {
+		return nil, err
+	}
+
+	if req, err = c.NewRequest("POST", EndpointBreathe(selector), bytes.NewBuffer(j)); err != nil {
+		return nil, err
+	}
+
+	if r, err = c.Client.Do(req); err != nil {
+		return nil, err
+	}
+
+	resp, err = NewResponse(r)
+	if err != nil {
+		return nil, err
+	}
+
+	return resp, nil
+}
+
 func (c *Client) setStates(selector string, states States) (*Response, error) {
 	var (
 		err  error
