@@ -98,6 +98,24 @@ type (
 	}
 )
 
+var (
+	DefaultBreatheCycles  float64 = 1
+	DefaultBreathePeriod  float64 = 1
+	DefaultBreathePersist bool    = false
+	DefaultBreathePowerOn bool    = true
+	DefaultBreathePeak    float64 = 0.5
+)
+
+func NewBreathe() Breathe {
+	var b Breathe
+	b.Period = DefaultBreathePeriod
+	b.Cycles = DefaultBreatheCycles
+	b.Persist = DefaultBreathePersist
+	b.PowerOn = DefaultBreathePowerOn
+	b.Peak = DefaultBreathePeak
+	return b
+}
+
 func (c *Client) SetState(selector string, state State) (*LifxResponse, error) {
 	var (
 		err  error
