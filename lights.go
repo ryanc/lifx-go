@@ -3,6 +3,7 @@ package lifx
 import (
 	//"crypto/tls"
 	"encoding/json"
+	"errors"
 	"net/http"
 	"time"
 )
@@ -114,6 +115,13 @@ func NewBreathe() Breathe {
 	b.PowerOn = DefaultBreathePowerOn
 	b.Peak = DefaultBreathePeak
 	return b
+}
+
+func (b *Breathe) Valid() error {
+	if b.Peak < 0 || b.Peak > 1 {
+		return errors.New("peak must be between 0.0 and 1.0")
+	}
+	return nil
 }
 
 func (c *Client) SetState(selector string, state State) (*LifxResponse, error) {
