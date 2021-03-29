@@ -21,6 +21,7 @@ type (
 		accessToken string
 		userAgent   string
 		Client      *http.Client
+		debug       bool
 	}
 
 	Result struct {
@@ -99,6 +100,12 @@ func NewClient(accessToken string, options ...func(*Client)) *Client {
 func WithUserAgent(userAgent string) func(*Client) {
 	return func(c *Client) {
 		c.userAgent = userAgent
+	}
+}
+
+func WithDebug(debug bool) func(*Client) {
+	return func(c *Client) {
+		c.debug = debug
 	}
 }
 
