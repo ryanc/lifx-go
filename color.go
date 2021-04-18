@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"net/http"
 	"strings"
 )
 
@@ -201,16 +200,10 @@ func (c *Client) ValidateColor(color Color) (Color, error) {
 	var (
 		err  error
 		s    *HSBKColor
-		r    *http.Response
 		resp *Response
 	)
 
 	if resp, err = c.validateColor(color); err != nil {
-		return nil, err
-	}
-
-	resp, err = NewResponse(r)
-	if err != nil {
 		return nil, err
 	}
 
