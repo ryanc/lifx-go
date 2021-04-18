@@ -209,6 +209,10 @@ func (c *Client) ValidateColor(color Color) (Color, error) {
 
 	defer resp.Body.Close()
 
+	if resp.IsError() {
+		return nil, resp.GetLifxError()
+	}
+
 	if err = json.NewDecoder(resp.Body).Decode(&s); err != nil {
 		return nil, err
 	}
