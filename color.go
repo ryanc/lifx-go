@@ -163,6 +163,10 @@ func (c RGBColor) ColorString() string {
 	return fmt.Sprintf("rgb:%d,%d,%d", c.R, c.G, c.B)
 }
 
+func (c RGBColor) String() string {
+	return c.ColorString()
+}
+
 func (c RGBColor) Hex() string {
 	return fmt.Sprintf("#%x%x%x", c.R, c.G, c.B)
 }
@@ -184,6 +188,10 @@ func (c HSBKColor) ColorString() string {
 	return strings.Join(s, " ")
 }
 
+func (c HSBKColor) String() string {
+	return c.ColorString()
+}
+
 func (c HSBKColor) MarshalText() ([]byte, error) {
 	return []byte(c.ColorString()), nil
 }
@@ -194,6 +202,10 @@ func (c RGBColor) MarshalText() ([]byte, error) {
 
 func (c NamedColor) ColorString() string {
 	return string(c)
+}
+
+func (c NamedColor) String() string {
+	return c.ColorString()
 }
 
 func (c *Client) ValidateColor(color Color) (Color, error) {
